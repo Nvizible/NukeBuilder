@@ -8,14 +8,22 @@ import re
 
 local = ARGUMENTS.get('local', None)
 
-localModuleName = "localSettings"
+localSettingsModuleName = "localSettings"
 if local:
-    localModuleName += "_" + local
+    localSettingsModuleName += "_" + local
 
 try:
-    localSettings = imp.load_module(localModuleName, *imp.find_module(localModuleName))
+    localSettings = imp.load_module(localSettingsModuleName, *imp.find_module(localSettingsModuleName))
 except ImportError:
-    logging.error("No local settings file found: %s.py" % localModuleName)
+    logging.error("No local settings file found: %s.py" % localSettingsModuleName)
+    sys.exit()
+
+pluginSettingsModuleName = "pluginSettings"
+
+try:
+    pluginSettings = imp.load_module(pluginSettingsModuleName, *imp.find_modulepluginSettingsModuleName)
+except ImportError:
+    logging.error("No plugin settings file found: %s.py" % pluginSettingsModuleName)
     sys.exit()
 
 platformSettings = {}
@@ -131,7 +139,7 @@ if not buildVersionFolder:
     logging.error("Invalid Nuke version : %s" % settings['nuke_version'])
     sys.exit()
 
-sourceFolder = "source"
+sourceFolder = pluginSettings.sourceFolder
 buildFolder = os.path.join("build", buildVersionFolder, platformName)
 
 if not os.path.isdir(buildFolder):
@@ -184,6 +192,3 @@ for nodeName in nodes:
         continue
         
     env.SharedLibrary(os.path.join(buildFolder, mode, nodeName), [sourceFile])
-
-# TODO: Create a test to load Nuke in terminal mode and check if the plugins load properly
-# TODO: Add a release, to a path specified in localSettings.py
