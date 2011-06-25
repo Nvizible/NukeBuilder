@@ -1,1 +1,67 @@
-Build system for Nuke plugins
+Nuke Plugins Builder
+
+Instructions
+------------
+
+This project is a plugin builder for Nuke. It is based on SCons, and allows developers to use the
+same SConstruct file for any system that they are building on.
+
+The main SConstruct file shouldn't need to be modified on a case by case basis.
+localSettings.py may need to be modified depending on how Nuke is installed on your system
+pluginSettings.py may need to be modified if your plugin requires extra headers/libraries.
+
+By default, it will build a node for each of the .cpp files in the source folder (as defined
+in pluginSettings.py), unless there is also an equivalent .dev file (which can be empty). The
+existence of the .dev file means that the node in question is still in development and shouldn't
+be built as part of a standard build.
+
+
+Files
+-----
+
+SConstruct        - This contains most of the core logic for building the plugin. It knows what
+                    Nuke requires for each type of system that Nuke can run on. It looks at the
+                    other files for anything specific to the local system.
+
+localSettings.py  - This file contains the details of where Nuke is installed, plus the default
+                    Nuke version and architecture.
+                   
+pluginSettings.py - This file contains any settings specific to the plugin, including where the
+                    source code can be found, plus any extra libraries that may be needed to build
+                    the plugins.
+
+
+Usage
+-----
+
+scons [<option>=<value> [...]]
+
+
+Options
+-------
+
+local        : Use a different localSettings file - the value given is appended to the module name.
+               eg "local=company" would load localSettings_company.py
+
+arch         : Compile for the specified architecture (32/64). The default value is defined in
+               localSettings.py
+
+mode         : Which mode to compile in (debug/release). Default: debug.
+
+nodes        : Which nodes to build. This is a comma-separated list of the nodes. Default: all
+
+dev          : If set to 1, will build nodes that are still in development. Default: 0
+
+nuke_version : Which Nuke version to compile for. The default is defined in localSettings.py
+
+nuke_root    : Override where to find Nuke to build against.
+
+
+
+To Do
+-----
+
+- Add in a test stage that launches a python script in Nuke and tests to see whether the nodes
+  can actually be loaded.
+- Add in the ability to release plugins to another location. Have a different location depending
+  on whether the mode is 'debug' or 'release'
