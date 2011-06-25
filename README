@@ -18,6 +18,23 @@ in pluginSettings.py), unless there is also an equivalent .dev file (which can b
 existence of the .dev file means that the node in question is still in development and shouldn't
 be built as part of a standard build.
 
+Build plugins can be found in the following location:
+
+build/<nuke_version>/<system>.<architecture>/<build_mode>
+
+nuke_version : This is the version of Nuke that the plugin was built against. As plugins work
+               across all releases of a major/minor version, this is usually just something like
+               "6.2". However, if they were built against an alpha or beta version of Nuke, then
+               the whole Nuke version is used, as plugin compatibility can break.
+               
+system       : The system that the plugins were built on. This will be one of "windows", "linux"
+               or "darwin" (OSX)
+               
+architecture : The architecture that the plugins were built on. For 64-bit, this is "x86_64".
+               For 32-bit, under OSX and Linux, this "i386", or for Windows, "x86". 
+
+build_mode   : This is either "debug" or "release", depending on what was specified on compile.
+
 
 Files
 -----
