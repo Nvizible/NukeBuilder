@@ -39,14 +39,14 @@ build_mode   : This is either "debug" or "release", depending on what was specif
 Files
 -----
 
-SConstruct        - This contains most of the core logic for building the plugin. It knows what
+SConstruct        : This contains most of the core logic for building the plugin. It knows what
                     Nuke requires for each type of system that Nuke can run on. It looks at the
                     other files for anything specific to the local system.
 
-localSettings.py  - This file contains the details of where Nuke is installed, plus the default
+localSettings.py  : This file contains the details of where Nuke is installed, plus the default
                     Nuke version and architecture.
                    
-pluginSettings.py - This file contains any settings specific to the plugin, including where the
+pluginSettings.py : This file contains any settings specific to the plugin, including where the
                     source code can be found, plus any extra libraries that may be needed to build
                     the plugins.
 
