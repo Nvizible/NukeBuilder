@@ -64,7 +64,7 @@ local        : Use a different localSettings file - the value given is appended 
                eg "local=company" would load localSettings_company.py
 
 arch         : Compile for the specified architecture (32/64). The default value is defined in
-               localSettings.py
+               localSettings.py. This can be a comma-separated list of both if desired.
 
 mode         : Which mode to compile in (debug/release). Default: debug.
 
@@ -72,10 +72,10 @@ nodes        : Which nodes to build. This is a comma-separated list of the nodes
 
 dev          : If set to 1, will build nodes that are still in development. Default: 0
 
-nuke_version : Which Nuke version to compile for. The default is defined in localSettings.py
-
-nuke_root    : Override where to find Nuke to build against.
-
+nuke_version : Which Nuke version to compile for. The default is defined in localSettings.py.
+               This can be defined without the trailing 'release' number, and the system will
+               figure out which actual full Nuke version should be built against.
+               This can also be a comma-separated list of multiple Nuke version (6.1,6.2).
 
 
 To Do
