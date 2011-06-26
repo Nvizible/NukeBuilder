@@ -85,3 +85,7 @@ To Do
   can actually be loaded.
 - Add in the ability to release plugins to another location. Have a different location depending
   on whether the mode is 'debug' or 'release'
+- Add the ability to define Nuke version as just MAJOR.MINOR and have the SConstruct file figure
+  out which the latest release (non-alpha/beta) to build against.
+- Add the ability to build against multiple architectures/nuke versions in one go. So something
+  like this would be possible: scons arch=32,64 nuke_version=6.0,6.1,6.2
