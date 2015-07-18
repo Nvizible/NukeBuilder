@@ -14,10 +14,10 @@ nukeLocation = {
 install = {
             'debug': {
                         'plugins' : "${HOME}/.nuke/",
-                        'menu'    : "${HOME}/.nuke/NV_DeepTools/%(nuke_build_version)s/"
+                        'menu'    : "${HOME}/.nuke/"
                      },
             'release': {
                         'plugins' : "${HOME}/.nuke/",
-                        'menu'    : "${HOME}/.nuke/NV_DeepTools/%(nuke_build_version)s/"
+                        'menu'    : "${HOME}/.nuke/"
                        }
           }
