@@ -6,49 +6,57 @@ Windows build settings and general testing by Thorsten Kaufmann, 2011
 Instructions
 ------------
 
-This project is a plugin builder for Nuke. It is based on SCons, and allows developers to use the
-same SConstruct file for any system that they are building on.
+This project is a plugin builder for Nuke. It is based on SCons, and allows
+developers to use the same SConstruct file for any system that they are building
+on.
 
 The main SConstruct file shouldn't need to be modified on a case by case basis.
-localSettings.py may need to be modified depending on how Nuke is installed on your system
-pluginSettings.py may need to be modified if your plugin requires extra headers/libraries.
+localSettings.py may need to be modified depending on how Nuke is installed on
+your system pluginSettings.py may need to be modified if your plugin requires
+extra headers/libraries.
 
-By default, it will build a node for each of the .cpp files in the source folder (as defined
-in pluginSettings.py), unless there is also an equivalent .dev file (which can be empty). The
-existence of the .dev file means that the node in question is still in development and shouldn't
-be built as part of a standard build.
+By default, it will build a node for each of the .cpp files in the source folder
+(as defined in pluginSettings.py), unless there is also an equivalent .dev file
+(which can be empty). The existence of the .dev file means that the node in
+question is still in development and shouldn't be built as part of a standard
+build.
 
 Build plugins can be found in the following location:
 
 build/<nuke_version>/<system>.<architecture>/<build_mode>
 
-nuke_version : This is the version of Nuke that the plugin was built against. As plugins work
-               across all releases of a major/minor version, this is usually just something like
-               "6.2". However, if they were built against an alpha or beta version of Nuke, then
-               the whole Nuke version is used, as plugin compatibility can break.
+nuke_version : This is the version of Nuke that the plugin was built against. As
+               plugins work across all releases of a major/minor version, this
+               is usually just something like "6.2". However, if they were built
+               against an alpha or beta version of Nuke, then the whole Nuke
+               version is used, as plugin compatibility can break.
                
-system       : The system that the plugins were built on. This will be one of "windows", "linux"
-               or "darwin" (OSX)
+system       : The system that the plugins were built on. This will be one of
+               "windows", "linux" or "darwin" (OSX)
                
-architecture : The architecture that the plugins were built on. For 64-bit, this is "x86_64".
-               For 32-bit, under OSX and Linux, this "i386", or for Windows, "x86". 
+architecture : The architecture that the plugins were built on. For 64-bit, this
+               is "x86_64".
+               For 32-bit, under OSX and Linux, this "i386", or for Windows,
+               "x86". 
 
-build_mode   : This is either "debug" or "release", depending on what was specified on compile.
+build_mode   : This is either "debug" or "release", depending on what was
+               specified on compile.
 
 
 Files
 -----
 
-SConstruct        : This contains most of the core logic for building the plugin. It knows what
-                    Nuke requires for each type of system that Nuke can run on. It looks at the
-                    other files for anything specific to the local system.
+SConstruct        : This contains most of the core logic for building the
+                    plugin. It knows what Nuke requires for each type of system
+                    that Nuke can run on. It looks at the other files for
+                    anything specific to the local system.
 
-localSettings.py  : This file contains the details of where Nuke is installed, plus the default
-                    Nuke version and architecture.
+localSettings.py  : This file contains the details of where Nuke is installed,
+                    plus the default Nuke version and architecture.
                    
-pluginSettings.py : This file contains any settings specific to the plugin, including where the
-                    source code can be found, plus any extra libraries that may be needed to build
-                    the plugins.
+pluginSettings.py : This file contains any settings specific to the plugin,
+                    including where the source code can be found, plus any extra
+                    libraries that may be needed to build the plugins.
 
 
 Usage
@@ -60,32 +68,39 @@ scons [<option>=<value> [...]]
 Options
 -------
 
-local        : Use a different localSettings file - the value given is appended to the module name.
-               eg "local=company" would load localSettings_company.py
+local        : Use a different localSettings file - the value given is appended
+               to the module name. eg "local=company" would load
+               localSettings_company.py
 
-arch         : Compile for the specified architecture (32/64). The default value is defined in
-               localSettings.py. This can be a comma-separated list of both if desired.
+arch         : Compile for the specified architecture (32/64). The default value 
+               is defined in localSettings.py. This can be a comma-separated
+               list of both if desired.
 
 mode         : Which mode to compile in (debug/release). Default: debug.
 
-nodes        : Which nodes to build. This is a comma-separated list of the nodes. Default: all
+nodes        : Which nodes to build. This is a comma-separated list of the
+               nodes. Default: all
 
-dev          : If set to 1, will build nodes that are still in development. Default: 0
+dev          : If set to 1, will build nodes that are still in development.
+               Default: 0
 
-nuke_version : Which Nuke version to compile for. The default is defined in localSettings.py.
-               This can be defined without the trailing 'release' number, and the system will
-               figure out which actual full Nuke version should be built against.
-               This can also be a comma-separated list of multiple Nuke version (6.1,6.2).
+nuke_version : Which Nuke version to compile for. The default is defined in
+               localSettings.py. This can be defined without the trailing
+               'release' number, and the system will figure out which actual
+               full Nuke version should be built against. This can also be a
+               comma-separated list of multiple Nuke version (6.1,6.2).
 
 
 To Do
 -----
 
-- Add in a test stage that launches a python script in Nuke and tests to see whether the nodes
-  can actually be loaded.
-- Add in the ability to release plugins to another location. Have a different location depending
-  on whether the mode is 'debug' or 'release'
-- Add the ability to define Nuke version as just MAJOR.MINOR and have the SConstruct file figure
-  out which the latest release (non-alpha/beta) to build against.
-- Add the ability to build against multiple architectures/nuke versions in one go. So something
-  like this would be possible: scons arch=32,64 nuke_version=6.0,6.1,6.2
+- Add in a test stage that launches a python script in Nuke and tests to see
+  whether the nodes can actually be loaded.
+- Add in the ability to release plugins to another location. Have a different
+  location depending on whether the mode is 'debug' or 'release'
+- Add the ability to define Nuke version as just MAJOR.MINOR and have the
+  SConstruct file figure out which the latest release (non-alpha/beta) to build
+  against.
+- Add the ability to build against multiple architectures/nuke versions in one
+  go. So something like this would be possible:
+  scons arch=32,64 nuke_version=6.0,6.1,6.2
